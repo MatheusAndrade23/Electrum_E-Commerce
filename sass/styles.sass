@@ -1,3 +1,5 @@
+@charset "UTF-8"
+    
 // Variáveis
 
 $bg-color: #cccc 
@@ -5,14 +7,226 @@ $font-color: #444
 
 // Estilos
 
-body
-    background-color: $bg-color
+body          
+     
+    background-color: $bg-color      // Exemplo de Nesting
     width: 100%
     height: 100%
 
 .container
+
     background-color: lightblue
 
     h1                          //.container h1{...} (CSS)
         color: $font-color
         background-color: red
+
+
+//----------------------------------- Algumas Explicações -----------------------------------//
+
+//-------> Comentários <-------//
+
+// Temos: // -> Não é incluso no CSS gerado 
+// Temos: /* -> É incluso no CSS gerado 
+// Temos: /*! -> É incluso no CSS gerado, até no modo de compressão
+// Podemos interpolar valores nos comentários, ex: #{1+3}
+
+//-------> Minificação do CSS <-------//
+
+// Podemos gerar CSS minificado facilmente
+// Para isso, devemos mudas a extenção na saída do --watch de .css para .min.css e o parâmetro : --style compressed
+// Ex: sass --watch sass/styles.sass:css/styles.min.css --style compressed
+
+//----------------------------------- Teoria -----------------------------------//
+
+//-------> Regras de Estilo <-------//
+
+// Nestig é a possibilade de aninhar seletores
+// O uso excessivo pode mais atrapalhar eu ajudar
+// Podemos separar elementos com vírgulas, assim, o sass entende que estamos selecionando mais de um elemento
+// E o recurso da linha acima funciona tanto para itens inferiores quanto para superiores
+
+// Os símbolos combinadores (+,~,>) também podem ser utilizados com o SASS:
+// Exemplo:
+
+//   ol                          //Todos os filhos <li> de <ol> terão a cor azul
+//       > li
+//           color: blue
+
+
+
+// Parent Selector: É um recurso do SASS que não existe no CSS, o qual permite a seleção do elemento pai de um elemento
+// Para isso, utilizamos o &
+// É muito utilizado para efeitos de "hover"
+// Exemplo:
+
+//  .nav-button                            //Efeito de "hover" no .nav-button
+//       background-color: red
+//
+//  &:hover
+//      background-color: blue
+//
+//  &-content   //Mesma cois que: .nav-button-content
+
+// Exemplo mais "real": Botões diferentes
+
+//  .button
+//          xxxxx      //Estilos gerais dos botões
+//      &start
+//          xxxxx      //Estilo específico do botão .button .start
+//      &get-out
+//          xxxxx      //Estilo específico do botão .button .get-out
+
+
+
+// Placeholder Selector: Utilizado para extender alguma classe
+// Utilizamos o %
+// Exemplo
+
+//%base-title-style
+//   border: xxx
+//   color: xxx
+
+//.title
+//    @extend %base-title-style          //Herda os comandos definidos na base
+
+
+//-------> Variáveis <-------//
+
+
+// Utilizamos o símbolo $ e geralmente são declaras com hífen (boa prática)
+// Exemplo:
+
+// $text-color: black
+
+// h1
+//   color: $text-color
+
+
+// As varáveis no SASS possuem escopo, mas, normalmente, declaramos as varáveis de forma global
+// As variáveis criadas em um bloco só podem ser acessadas por ele e por seus filhos
+// Exemplo:
+
+// div
+//     $text-color: white          //Variável válida somente dentro da div 
+//     p
+//           color: $text-color
+
+
+// Shadowing: Permite o uso do mesmo nome para duas variáveis diferentes
+// A varável "mais local" faz o sombreamento das outras
+
+
+// Módulos de variáveis: Podemos externalizar as variáveis em um arquivo
+// Importamos com o @import
+// Exemplo:
+
+//_variables.sass         // _ no começo para boa prática no nome do arquivo seprado
+
+//@import 'variables'     //Não precisa da extensão nem _
+
+
+// Podemos interpolar valores em uma variável
+// Utilizamos a sintaxe #{valor}
+
+
+//-------> Funcionalidades do SASS <-------//
+
+
+// Partials: Podemos criar um arquivo e invocá-lo e outro arquivo SASS
+// Utilizamos o @import
+
+
+// Mixins: São como funções, podemos definir um código que será reutilizado ao longo do projetos
+// A sintaxe é:
+
+// @mixin nome do mixin
+//       regras
+
+// p
+//    @include nome do mixin            //Importa as regras do mixin
+
+// Os mixins também possuem parâmetros que podem ser recebidos, como funções
+// Sintaxe:
+
+// @mixin sapce($a,$b)
+//       padding: ${$a + $b}
+//       margin: $a $b
+
+// div
+//       @include space(10px, 5px)
+
+// Podemos também utilizar parâmetros opcionais
+// Devem ser colocados à direita dos obrigatórios
+// Exemplo:
+
+// @mixin space($a,$b: 10px)
+//       padding: ${$a + $b}
+//       margin: $a $b
+
+// div
+//       @include space(10px, 5px)
+
+
+// Também podemos chamar um parâmetro por nome:
+// Exemplo:
+
+// @mixin space($val-1, $val-2: 10px)
+//       padding: ${$val-2 + $val-1}
+//       margin: $val-2 $val-1
+
+// div
+//       @include space($val-1: 10px, $val-2: 235px)
+
+
+// Operações matemáticas com SASS
+// O resultado é calculado e tranferido para css
+// Exemplo:
+
+// div
+//    width: 100px * 3 
+
+
+// Funções: São como mixins, mas são usadas para outras aplicações
+// Sintaxe: @function nome(args)
+// Também podem retornar valores com o @return
+// Exemplo
+
+// @function text-color($size)
+// 
+//    $color: black
+//
+//    @if $size > 10
+//        $color: red
+//    @else
+//        $color: blue
+//    @return $color
+
+// Também é possível adicionar argumentos opcionais e chamar variáveis pelo nome, seguindo as mesmas regras dos mixins
+
+
+// Podemos gerar erros com SASS
+// Utilizamos @error e podemos interpolar variáveis também
+
+// @error "Este software não está funcionando!"
+
+
+// Além do erro, também podemos gerar um Warning com @warn, seguindo as mesmas regras dos erros
+
+// E também existe o @debug, que imprime mensagens no console, e sim, é igual o console.log do javascript
+
+// Estruturas de condição também existem: Se usa @if, @else if e @else como já mostrado num exemplo acima
+
+// Também existem estruturas de repetição:]
+//
+// @each: podemos repetir uma criação de classe n vezes, por exemplo
+// Exemplo:
+//
+//  @each $font in $fonts                // No html, estaria assim:  <h1 class="title-40px"> <h1 class="title-90px"> e ppor aí vai
+//      .title-#{$font}                     
+//       font-size: $font
+//
+// @for: criar estrutura de repetição, porém podemos decidir quantas vezes isso vai se repetir
+// Exemplo:
+// 
+// @for $i from 1 trough 3      // vai repetir do 1 até o 3
