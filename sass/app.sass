@@ -1,25 +1,7 @@
-@charset "UTF-8"
-    
-// Variáveis
-
-$bg-color: #cccc 
-$font-color: #444
-
-// Estilos
-
-body          
-     
-    background-color: $bg-color      // Exemplo de Nesting
-    width: 100%
-    height: 100%
-
-.container
-
-    background-color: lightblue
-
-    h1                          //.container h1{...} (CSS)
-        color: $font-color
-        background-color: red
+@use 'plugins/plugins'
+@use 'modules/modules'
+@use 'base/base'
+@use 'layouts/layouts'
 
 
 //----------------------------------- Algumas Explicações -----------------------------------//
