@@ -6,7 +6,7 @@
 
 <br>
 
-<h3>Projetos simples de uma página E-commerce desenvolvida com SASS, a fim de praticar este novo conhecimento.</h3>
+<h3>Projetos simples de uma página E-Commerce desenvolvida com SASS, a fim de praticar este novo conhecimento.</h3>
 
 ---
 
