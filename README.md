@@ -2,11 +2,13 @@
  
 <div align="center">
     <img width="50%" src="img/electrum-logo.png">
-<div>
+</div>
 
-Projetos simples de uma página E-commerce desenvolvida com HTML e SASS, com o intuito de praticar este novo conhecimento.
+<br>
 
-##
+<h3>Projetos simples de uma página E-commerce desenvolvida com HTML e SASS, com o intuito de praticar este novo conhecimento.</h3>
+
+---
 
 <h2>Um pequena tour pelo site! 🚀</h2>
 
